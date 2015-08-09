@@ -48,8 +48,8 @@
  *		76a88d63d9519978/041a7d0570de2d48?lnk=raot
  */
 
-/* Solaris and Windows do not provide vasprintf() or asprintf(). */
-#if defined(__WIN32) || (defined(__SVR4) && defined(__sun))
+/* Solaris, AIX and Windows do not provide vasprintf() or asprintf(). */
+#if defined(__WIN32) || (defined(__SVR4) && defined(__sun) || defined(_AIX))
 int vasprintf( char **sptr, char *fmt, va_list argv ) 
 { 
     int wanted = vsnprintf( *sptr = NULL, 0, fmt, argv ); 
