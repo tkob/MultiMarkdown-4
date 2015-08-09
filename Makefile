@@ -11,11 +11,18 @@
 #
 # - Fletcher T. Penney
 
+uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+
 CFLAGS ?= -Wall -g -O3 -include GLibFacade.h
 PROGRAM = multimarkdown
 VERSION = 4.7
 
 OBJS= multimarkdown.o parse_utilities.o parser.o GLibFacade.o writer.o text.o html.o latex.o memoir.o beamer.o lyx.o lyxbeamer.o opml.o odf.o critic.o rng.o rtf.o transclude.o toc.o
+
+ifeq ($(uname_S),AIX)
+	OBJS = multimarkdown.o parse_utilities.o parser.o GLibFacade.o writer.o text.o html.o latex.o memoir.o beamer.o lyx.o lyxbeamer.o opml.o odf.o critic.o rng.o rtf.o transclude.o toc.o aix-support/getopt_long.o
+	CFLAGS = -Wall -g -O3 -include GLibFacade.h -I aix-support
+endif
 
 # Common prefix for installation directories.
 # NOTE: This directory must exist when you start the install.
